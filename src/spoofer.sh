@@ -1,3 +1,4 @@
+#!/bin/bash
 main()
 {
         SSID=$(/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -I  | awk -F' SSID: '  '/ SSID: / {print $2}')
