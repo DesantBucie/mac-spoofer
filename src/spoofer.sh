@@ -27,5 +27,7 @@ elif [ "$1" = "-s" ]; then
         sleep $(( 60*$2 ))
         n=$(( n+1 ))
     done
+else
+    main
 fi
 
