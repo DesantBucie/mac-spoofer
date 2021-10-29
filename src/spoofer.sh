@@ -6,9 +6,12 @@ main()
         RANDOMISED_MAC=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
         INTERFACE=$(networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/{getline; print $2}')
         echo "$SSID" "$RANDOMISED_MAC" "$INTERFACE"
+        networksetup -setairportpower en0 on
         $SUDO /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport "$INTERFACE" -z
         $SUDO ifconfig "$INTERFACE" ether "$RANDOMISED_MAC"
+        networksetup -detectnewhardware
         networksetup -setairportnetwork "$INTERFACE" "$SSID"
+
 }
 if [ "$(command -v doas)" ]; then
     SUDO=doas
@@ -30,4 +33,3 @@ elif [ "$1" = "-s" ]; then
 else
     main
 fi
-
